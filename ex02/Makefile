@@ -13,11 +13,11 @@
 NAME		:= whatever
 
 CXX			:= c++
-CXX_FLAGS	:= -Wall -Wextra -Werror -std=c++98
+CXX_FLAGS	:= -Wall -Wextra -Werror -std=c++20
 DEBUG_FLAGS	:= -g
 # ---------------------------------------------------------------------------- #
 INC_DIR		:= ./inc
-HEADERS		:=	$(INC_DIR)/whatever.hpp
+HEADERS		:=	$(INC_DIR)/iter.hpp
 # ---------------------------------------------------------------------------- #
 SRC_DIR	:=	./src
 OBJ_DIR	:=	./obj

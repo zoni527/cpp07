@@ -10,73 +10,67 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "whatever.hpp"
-#include <string>
+#include "iter.hpp"
 #include <iostream>
 
 #define C_HI_Y	"\033[0;93m\001"
 #define C_RST	"\033[0m\002"
 
-static void			subjectMain( void );
 static std::string	n_chars( char c, size_t n );
 static void			print_test_name( std::string str );
-
+static int			doubleTheInt( int & d );
+static double		doubleTheDouble( double &d );
+static void			printTheInt( int const &i );
+static void			printTheDouble( double const &d );
 
 int	main( void )
 {
-	print_test_name("Subject's main");
-	subjectMain();
-	print_test_name("Const ints");
-	{
-		int const	a = 1;
-		int const	b = 2;
+	int		iArray[] = { -3, -2, -1, 0, 1, 2, 3 };
+	double	dArray[] = { 0.123, -3.21, 42.0420, 1000.0001 };
 
-		// Won't compile if uncommented
-		// swap( a, b );
-		std::cout << "a = " << a << ", b = " << b << '\n';
-		std::cout << "min( a, b) = " << min( a, b ) << '\n';
-		std::cout << "max( a, b) = " << max( a, b ) << '\n';
-	}
-	print_test_name("Doubles");
+	print_test_name("Int array iter");
 	{
-		double	a = .1;
-		double	b = -.1;
-
-		std::cout << "a = " << a << ", b = " << b << '\n';
-		std::cout << "swap( a, b );" << '\n';
-		swap( a, b );
-		std::cout << "a = " << a << ", b = " << b << '\n';
-		std::cout << "min( a, b) = " << min( a, b ) << '\n';
-		std::cout << "max( a, b) = " << max( a, b ) << std::endl;
+		size_t	n = sizeof( iArray ) / sizeof( iArray[0] );
+		iter( iArray, n, doubleTheInt );
+		iter( iArray, n, printTheInt );
 	}
+	print_test_name("Double array iter");
+	{
+		size_t	n = sizeof( dArray ) / sizeof( dArray[0] );
+		iter( dArray, n, doubleTheDouble );
+		iter( dArray, n, printTheDouble );
+	}
+	std::cout << std::endl;
 	return 0;
 }
 
-static void	subjectMain( void )
+static double	doubleTheDouble( double &d )
 {
-	int a = 2;
-	int b = 3;
-
-	::swap( a, b );
-	std::cout << "a = " << a << ", b = " << b << '\n';
-	std::cout << "min( a, b ) = " << ::min( a, b ) << '\n';
-	std::cout << "max( a, b ) = " << ::max( a, b ) << '\n';
-
-	std::string c = "chaine1";
-	std::string d = "chaine2";
-
-	::swap(c, d);
-	std::cout << "c = " << c << ", d = " << d << '\n';
-	std::cout << "min( c, d ) = " << ::min( c, d ) << '\n';
-	std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
+	return ( d *= 2 );
 }
+
+static int	doubleTheInt( int &i )
+{
+	return ( i *= 2 );
+}
+
+static void		printTheInt( int const &i )
+{
+	std::cout << i << std::endl;
+}
+
+static void		printTheDouble( double const &d )
+{
+	std::cout << d << std::endl;
+}
+
 
 /* -------------------------------------------------------------------------- */
 
 static void print_test_name( std::string str ) {
 
-	for ( size_t i = 0; i < str.size(); ++i )
-		str[i] = std::toupper( str[i] );
+	for ( char &c : str )
+		c = std::toupper( c );
 
 	size_t width = str.length() + 10;
 
