@@ -19,9 +19,9 @@ template<typename T>
 class Array
 {
 public:
-	Array( void ) = delete;
+	Array( void );
 	Array( Array const &other );
-	Array( size_t n = 0 );
+	Array( size_t n );
 	~Array( void );
 
 	Array	&operator=( Array const &rhs );
@@ -30,11 +30,15 @@ public:
 	size_t	size( void ) const;
 
 private:
-	T		*_members = nullptr;
 	size_t	_size = 0;
+	T		*_members = nullptr;
 };
 
 /* -------------------------------------------------------------------------- */
+
+template<typename T>
+Array<T>:: Array( void )
+	: _size( 0 ), _members( new T[0] ) {}
 
 template<typename T>
 Array<T>:: Array( size_t n )
@@ -78,6 +82,16 @@ template<class T>
 T			&Array<T>:: operator[]( size_t idx ) const
 {
 	if ( idx >= _size )
-		throw std::out_of_range( "Array: index out of range" );
+	{
+		throw std::out_of_range(
+			"Array: index " + std::to_string( idx ) + " out of range, "
+			+ "array size: " + std::to_string( _size ) );
+	}
 	return _members[idx];
+}
+
+template<class T>
+size_t		Array<T>:: size( void ) const
+{
+	return _size;
 }

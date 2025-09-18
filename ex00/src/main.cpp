@@ -49,6 +49,7 @@ int	main( void )
 		std::cout << "min( a, b) = " << min( a, b ) << '\n';
 		std::cout << "max( a, b) = " << max( a, b ) << std::endl;
 	}
+	std::cout << std::endl;
 	return 0;
 }
 
